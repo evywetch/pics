@@ -1,0 +1,129 @@
+                            App challenges
+=> Need to get a search term from the user
+=> Need to use that search term to make a request to an outside API and fetch data
+=> Need to take the fetched images and show them on the screen in a list
+=> 
+
+
+                            Stuff to still figure out
+=> How do we get feedback from the user?
+=> How do we fetch data from some outside API or server?
+=> How do we show lists of records?
+
+                            Library used in this App
+=> Samentic UI: To make the form looks better
+    => Go to Samentic-ui-cdnjs.com
+    => Do a search for "semantic.min.css"
+    => Copy "https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css" 
+    => Put the link in index.html 
+
+
+                                    API used in this App
+=> Unsplash API
+    => This API provides lots of pics
+    => It has the ability for you to make separate applications as they refer to them with their service. These are essentially Different little records that record your interaction with their API.
+    => Go to unsplash.com/developers
+    => Create account (register as a developer) and login
+    => Once u r loged in, go to menu bar: Your apps
+    => Click "New Application" button 
+    => Check accept all the terms
+    => Enter app's name and description
+    => "Keys" we need it to get access to the API
+    => Can go to Documentation menu to read how to get started with the API
+
+
+
+                                    Controlled VS Uncontrolled Component
+=> Controlled Elements                                   
+Flow:
+1. User types input
+2. Callback gets invoked
+3. We call setState with the new value
+4. Component rerenders
+5. Input is told what its value is (coming from state)
+NOTE: Waht ever we assign into "value" attribute, is what the input bax going to show when component rerender, that's why we assign  value={this.state.term}
+
+Benefits of Controlled Elements(using state)
+=> We can use state(JS) to update the current input value instantly without having to bother with DOM(document.querySelector().value)
+=> We can directly store input value in state, dont have to store in HTML
+=> We can centrallize all info we have in React component
+
+NOTE: Different between Controlled VS Uncontrolled Component, the key idea is that we store all our info inside of our component on our state property, as opposed to storing our data inside the DOM. That's why we do onChange={(e) => this.setState({ term: e.target.value })} (in SearchBar.js)
+
+
+                                    "this" in JS
+What is "this" used for in the class?
+=> "this" is a reference to a class itself.
+=> Insctance of SearchBar class : state, render(), onFormSubmit()
+=> When we say "this" , we essentially saying , give me a reference to the instance of SearchBar. We can then use that to get direct access to the state, render(), onFormSubmit()
+=> 
+
+
+How is the value of "this" determined in a function?
+=> In JS when we call a function(not methods in a class), we just call it like onFormSubmit(), we dont call it like this.onFormSubmit(). So a function doesn't know "this".
+
+How to solve "this" problem in functions
+ 1. Use " bind(this)"
+=> When we bind a function, it's going to produce a new version of that function.
+=> The new function that is created is fixed with the correct value of "this"
+ 2. Turn a problem function to an arrow function instead
+ => Special features of arrow functions is that they automatically bind the value of "this" for all the code inside of the function
+ 3. Call a problem function in an arrow function. Ex. onSubmit={(e) => this.onFormSubmit(e)} 
+
+
+                                    Axios VS fetch
+ => Axios and fetch are 2 different libraries
+ => Technically, Fetch is not a library. Its frequently used in React applications for managing network requests and fetching some amount of data. Function built into modern browsers. With Fetch, we dont have to install any 3rd party packages, which means that our final application size or amount of code that we have to send down to a user's browser is slightly smaller if we make use of fetch over Axios. However, on the flip size, Fetch is a far more basic and lower level function to use to fetch data. If u use Fetch, you are going to end up having to write a lot of code that is already written for you in Axios.
+ => Axios is a standalone 3rd party package that can be very easily installed into a React project using NPM.
+
+
+                                    How to install Axios
+=> Go to Terminal at your project
+=> Type " npm install --save axios "
+=> Then import it in App.js " import axios from 'axios';
+=> NOTE: Traditionally, we usually put imports for 3rd party packages or dependencies ABOVE import statements for files that you created
+
+                            How to test quickly if Axios succesfully making the request to API
+=> Inspect -> Network -> click icon 'clear request' circle with diaganal line
+=> Type some request in an input field
+=> Then u will see the request in the "Network" page
+
+
+                                        Time Series (Flows of the app)
+=> Component renders itself one time with no list of images
+=> onSearchSubmit() called
+=> Request made to Unsplash
+=>  .... Wait....
+=> Request complete
+=> Set image data on state of app component
+=> App component rerenders and show images
+NOTE: This network request is a Asynchronous request that will take some amount of time for Axios to reach out on Splash and then get a response back. By the time we get a response from this request, we will have already exited the onsearchSubmit(). Now, in order to get Notification of when the request is completed, we have 2 different options:
+     1 = using "then()"  
+     .then((response) => {
+        console.log(response.data.results);
+      });
+
+      2 = Use "async await" syntax (we use this case)
+NOTE: Whenever we make a request with Axios, it returns a Promise object. A Promise is an object that will give us a little Notification. When the request is completed, we chain on a ".then". A callback function in then() will be invoked with the data that we got back from the API 
+
+NOTE: By putting the "async" keyword in front of the function name, allow us to use "async await" syntax inside the function
+
+
+                                    Accessing DOM with Refs
+=> Let the ImageCard render itself and its image.
+=> Reach into the Dom and figure out the hight of the image
+=> Set the image height on state to get the component to render.
+=> When rendering, assign a "grid-row-end" to make sure the image takes up the appropriate space.
+
+
+                                    React Refs
+=> Gives access to a single DOM element
+=> We create refs in the contructor, assign them to instance variables, then pass to a particular JSX element as props. NOTE: has to create a contructor() first to get a "this" , so then we can use " this" to create a ref :  this.imageRef = React.createRef();
+=> NOTE: When we put "ref" in any DOM element , that ref will tell u info about that DOM node
+
+
+                            🌟🌟🌟🌟🌟Interesting Methods and Techniques from this app🌟🌟🌟🌟🌟
+=> document.querySelector('img').clientHeight  // it will give the height info in px (321px)
+=> Math.ciel() = Round a number upward to its nearest integer
+=> How to use "ref" to get element details
+

@@ -1,0 +1,20 @@
+.image-list {
+  /* 
+  ** grid-template-columns => creates a set number of columns
+  ** auto-fill => the css ruls or thr grid css rule system automatically decide how many columns to insert
+  ** minmax(250px, 1fr) => each one of those different columns is going to be at minimum 250px wide, 1fr = a maximum allocation os space
+  ** 1fr => every column that we create , we want them to be eqally sized.
+  ** grid-auto-rows => how tall of each different rows or different cells are going to be(height of each row)
+  ** grid-row-end => this specific cell needs to be allocated 2 cells worth of space
+  ** grid-gap: 0 10px;  0 = 0px between each row, 10px = 10px between each column
+   */
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  grid-gap: 0 10px;
+  grid-auto-rows: 10px;
+}
+
+.image-list img {
+  width: 250px;
+  grid-row-end: span 2;
+}
